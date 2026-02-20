@@ -1,15 +1,25 @@
 using System.Data;
 using Dapper;
 using Microsoft.Data.SqlClient;
-
+using Microsoft.Extensions.Configuration;
 
 namespace Vinay.Data
 {
-   public class DataContextDapper
-{
-    private string _connectionstring =
-        "Server=localhost;Database=DotNetCourseDatabase;TrustServerCertificate=true;User Id=SA;Password=Vinaysen321;";
+    public class DataContextDapper
+    {
+        private readonly string _connectionstring;
 
+        public DataContextDapper()
+        {
+            IConfiguration config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true)
+                .AddUserSecrets<DataContextDapper>()
+                .Build();
+
+            _connectionstring = config.GetConnectionString("DefaultConnection");
+        }
+   
     public IEnumerable<T> LoadData<T>(string sql)
     {
         using IDbConnection dbConnection =
@@ -41,7 +51,7 @@ namespace Vinay.Data
 
         return dbConnection.Execute(sql, parameters) > 0;  // MUST pass parameters
     }
-   }
+   } 
 
 }
 
