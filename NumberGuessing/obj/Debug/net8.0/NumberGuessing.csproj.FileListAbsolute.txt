@@ -1,0 +1,14 @@
+/data/DevTool/NumberGuessing/bin/Debug/net8.0/NumberGuessing
+/data/DevTool/NumberGuessing/bin/Debug/net8.0/NumberGuessing.deps.json
+/data/DevTool/NumberGuessing/bin/Debug/net8.0/NumberGuessing.runtimeconfig.json
+/data/DevTool/NumberGuessing/bin/Debug/net8.0/NumberGuessing.dll
+/data/DevTool/NumberGuessing/bin/Debug/net8.0/NumberGuessing.pdb
+/data/DevTool/NumberGuessing/obj/Debug/net8.0/NumberGuessing.GeneratedMSBuildEditorConfig.editorconfig
+/data/DevTool/NumberGuessing/obj/Debug/net8.0/NumberGuessing.AssemblyInfoInputs.cache
+/data/DevTool/NumberGuessing/obj/Debug/net8.0/NumberGuessing.AssemblyInfo.cs
+/data/DevTool/NumberGuessing/obj/Debug/net8.0/NumberGuessing.csproj.CoreCompileInputs.cache
+/data/DevTool/NumberGuessing/obj/Debug/net8.0/NumberGuessing.dll
+/data/DevTool/NumberGuessing/obj/Debug/net8.0/refint/NumberGuessing.dll
+/data/DevTool/NumberGuessing/obj/Debug/net8.0/NumberGuessing.pdb
+/data/DevTool/NumberGuessing/obj/Debug/net8.0/NumberGuessing.genruntimeconfig.cache
+/data/DevTool/NumberGuessing/obj/Debug/net8.0/ref/NumberGuessing.dll
