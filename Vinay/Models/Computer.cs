@@ -2,6 +2,7 @@ namespace Vinay.Models
 {
 public class Computer
     {
+        public int ComputerId {get;set;}
         public string Motherboard {get;set;} = "";
         public int CPUcores  {get;set;}
         public bool HasWifi  {get;set;}
@@ -9,6 +10,9 @@ public class Computer
         public DateTime Releasedate  {get;set;}
         public string Videocard  {get;set;}=""; //default setup for null
         public decimal Price  {get;set;}
+        
+
+
 
       
     }

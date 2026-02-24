@@ -5,6 +5,7 @@
     GO
     DELETE FROM Computer WHERE Motherboard='Z568h';
     DELETE FROM Computer WHERE Motherboard='zqw68';
+    DELETE FROM Computer WHERE Motherboard='z690';
     select * from sys.tables;
 
     -- CREATE TABLE Computer(
