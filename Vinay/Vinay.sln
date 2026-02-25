@@ -1,8 +1,16 @@
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vinay", "Vinay.csproj", "{2EBFBF8A-9071-925B-440D-A774E3ADE6AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vinay_Files", "..\Vinay_Files\Vinay_Files.csproj", "{5DA4AEF0-4D73-44C0-8450-E8414F3C6D90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vinay_JSON", "..\Vinay_JSON\Vinay_JSON.csproj", "{81425629-3F2D-4552-88EC-F0C1B334F790}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vinay_Mapping", "..\Vinay_Mapping\Vinay_Mapping.csproj", "{02822146-282A-44A8-A340-23BE26A854C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vinay_AsyncAwait", "..\Vinay_AsyncAwait\Vinay_AsyncAwait.csproj", "{652B66E8-534C-4B2C-BF8A-87240058266B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,6 +22,22 @@ Global
 		{2EBFBF8A-9071-925B-440D-A774E3ADE6AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EBFBF8A-9071-925B-440D-A774E3ADE6AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EBFBF8A-9071-925B-440D-A774E3ADE6AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DA4AEF0-4D73-44C0-8450-E8414F3C6D90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DA4AEF0-4D73-44C0-8450-E8414F3C6D90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DA4AEF0-4D73-44C0-8450-E8414F3C6D90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DA4AEF0-4D73-44C0-8450-E8414F3C6D90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81425629-3F2D-4552-88EC-F0C1B334F790}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81425629-3F2D-4552-88EC-F0C1B334F790}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81425629-3F2D-4552-88EC-F0C1B334F790}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81425629-3F2D-4552-88EC-F0C1B334F790}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02822146-282A-44A8-A340-23BE26A854C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02822146-282A-44A8-A340-23BE26A854C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02822146-282A-44A8-A340-23BE26A854C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02822146-282A-44A8-A340-23BE26A854C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{652B66E8-534C-4B2C-BF8A-87240058266B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{652B66E8-534C-4B2C-BF8A-87240058266B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{652B66E8-534C-4B2C-BF8A-87240058266B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{652B66E8-534C-4B2C-BF8A-87240058266B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

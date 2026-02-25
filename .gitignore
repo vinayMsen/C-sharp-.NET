@@ -19,3 +19,7 @@ obj/
 # OS files
 .DS_Store
 Thumbs.db
+
+# json files with sensitive information
+appsettings.json
+appsettings.Development.json
