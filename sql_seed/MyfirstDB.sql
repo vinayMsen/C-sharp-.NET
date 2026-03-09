@@ -88,9 +88,9 @@ FOREIGN KEY (Branch_id) REFERENCES Branch(Branch_id) ON DELETE CASCADE
 SELECT * FROM sys.tables;
 
 --Branch
-  |---< Employee
-  |---< Client
-  |---< Branch_Supplier
+  ---< Employee
+  ---< Client
+  ---< Branch_Supplier
 
 --Employee
   ---< works_with >--- Client
@@ -189,10 +189,22 @@ FROM employee as e
 WHERE e.emp_id IN (
     SELECT emp_id FROM works_with  WHERE total_sales > 50000);
 
---Find a list of employee and branch names
+--Find a list of employee and branch names --(00:00:00.038 non-indexed query)
+CREATE NONCLUSTERED INDEX idx_employee_branch_id ON employee(Branch_id);
 SELECT first_name, Branch_name from employee , Branch 
 where employee.Branch_id=branch.Branch_id;
 SELECT * from employee;
 SELECT * FROM Branch;
 
 SELECT getdate() as today_date ;
+
+--Indexing is very important for performance optimization. 
+-- It allows the database engine to find and retrieve data faster.
+--Without an index, the database engine has to scan the entire table to find the relevant rows
+-- Indexing is a special data structure.  
+-- They uses B-Tree or Hashing to organize the data in a way that allows for fast retrieval.
+-- They use logrithimic time complexity O(log n) for search instead of Linear time .
+-- 
+Create  INDEX idx_employee_emp_id ON employee(emp_id);
+
+SELECT * FROM employee;

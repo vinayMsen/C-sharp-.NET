@@ -8,16 +8,16 @@
     DELETE FROM Computer WHERE Motherboard='z690';
     select * from sys.tables;
 
---    CREATE TABLE Computer(
---         ComputerId INT IDENTITY(1,1) PRIMARY KEY,
---         Motherboard NVARCHAR(50),
---         CPUCores INT,
---         HasWifi BIT,
---         HasLTE BIT,
---         ReleaseDate DATE,
---         Price DECIMAL(18,4),
---         VideoCard NVARCHAR(50)
---     );
+    -- CREATE TABLE Computer(
+    --     ComputerId INT IDENTITY(1,1) PRIMARY KEY,
+    --     Motherboard NVARCHAR(50),
+    --     CPUCores INT,
+    --     HasWifi BIT,
+    --     HasLTE BIT,
+    --     ReleaseDate DATE,
+    --     Price DECIMAL(18,4),
+    --     VideoCard NVARCHAR(50)
+    -- );
     select * FROM Computer;
     GO
     UPDATE Computer SET Motherboard='Sample-Motherboard' where ComputerId=1;
@@ -72,9 +72,6 @@ WHERE Motherboard IN (
     WHERE row_num > 1
 );
 
--- to see the current database
-SELECT DB_NAME() AS CurrentDatabase;
-GO
 
 -- UPDATE  Computer
 --    SET  CPUCores = 4

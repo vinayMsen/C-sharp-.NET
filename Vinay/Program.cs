@@ -117,7 +117,7 @@ namespace Vinay
  /*           writing other queries
 
 
-            inserting values  // prevents sql injection , its a parameter binding
+            inserting values  // @ prevents sql injection , its a parameter binding
             string insertsql="INSERT INTO Computer(Price,Motherboard,HasLTE,HasWifi,Videocard,Releasedate,CPUcores)values(Price,Motherboard,HasLTE,HasWifi,Videocard,Releasedate,CPUcores)";
             dbConnection.Execute(insertsql, new
             {

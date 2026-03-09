@@ -13,13 +13,19 @@ namespace Vinay.Data
     // and accessed through user secrets, but for some reason i am not using this right now,
     //  so I have hardcoded the connection string for now, but I will try to fix it later
 
-        private string? _connectionstring;
-        
-        public DataContextDapper(IConfiguration config)
-        {
-            _connectionstring = config.GetConnectionString("DefaultConnection");
-        }
+        private readonly string _connectionstring;
 
+        public DataContextDapper()
+        {
+            IConfiguration config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true)
+                .AddUserSecrets<DataContextDapper>()
+                .Build();
+
+            _connectionstring = config.GetConnectionString("DefaultConnection");
+
+        }
         
         //  private string _connectionstring =
         // "Server=localhost;Database=DotNetCourseDatabase;TrustServerCertificate=true;User Id=SA;Password=Vinaymiles321@;";
@@ -37,8 +43,7 @@ namespace Vinay.Data
         return dbConnection.QuerySingle<T>(sql);
     }
 
-    public int ExecutesqlReturnCount(string sql, object parameters) // custom function
-    
+    public int ExecutesqlReturnCount(string sql, object parameters)
     {
         using IDbConnection dbConnection =
             new SqlConnection(_connectionstring);
