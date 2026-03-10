@@ -1,5 +1,6 @@
 use DotNetCourseDatabase;
 GO
+Select * from Users;
 SELECT DB_NAME();
 GO
 CREATE TABLE Users(

@@ -9,7 +9,7 @@ namespace DotnetApi.Data
         // IConfiguration is used to get the connection string from the appsettings.json file and it is 
         // part of the ASP.NET Core framework
         private readonly IConfiguration _config;
-        private readonly string _connectionString;
+        private readonly string? _connectionString;
 
         public DataContextDapper(IConfiguration config)
         {

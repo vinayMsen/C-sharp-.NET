@@ -1,11 +1,13 @@
 using System.Data; 
 using Dapper;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using DotnetApi.Data;
-
+using DotnetApi.Models.Users;
+using DotnetApi.Dto;
 using Microsoft.AspNetCore.Mvc;
 //alt+shift+f to format the code
-using System.Runtime.InteropServices;
+
 
 
 
@@ -28,16 +30,16 @@ public class UserController : ControllerBase
 
     // testing dapper 
     [HttpGet("TestConnection")]
-    public DateTime TestConection()
+    public DateTime TestConnection()
     {
         return _dapper.LoadDataSingle<DateTime>("SELECT GETDATE()");
     }
 
    
-   [HttpGet("GetUsers/{testValue}")]
+   [HttpGet("GetValue/{testValue}")]
    //public IActionResult Test()
 
-   public string[] GetUsers(string testValue)
+   public string[] GetValue(string testValue)
     {
         
         string[] response = new string[]
@@ -52,18 +54,64 @@ public class UserController : ControllerBase
 
         // database connection test
     [HttpGet("GetUsers")]
-    
+
     public IEnumerable<User> GetUsers()
         {
-            string sql= @"select UserId,FirstName,LastName,Email,Gender,Active From Users";
+            string sql= @"select UserId,FirstName,LastName,
+            Email,Gender,Active 
+            From Users";
             IEnumerable<User> users= _dapper.LoadData<User>(sql);
             return users;
         }
 
     [HttpGet("GetSingleUser/{UserId}")]
-    public UserController GetSingleUser(int UserId)
+    public User GetSingleUser(int UserId)
         {
-             
+            string sql= @"select UserId,FirstName,LastName,
+            Email,Gender,Active 
+            From Users 
+            where UserId=  " + UserId.ToString(); // INT user input to string since query  is string type
+            User signleuser= _dapper.LoadDataSingle<User>(sql);
+            return signleuser;
+        }
+
+
+
+    [HttpPut("EditUser")]
+    public IActionResult EditUser(User user) //taking input 
+        {
+        string sql = @"Update Users Set 
+                Email = '" + user.Email + 
+                "', LastName = '" + user.LastName +
+                "' WHERE UserId = " + user.UserId;
+            if(_dapper.ExecuteSql(sql))
+            {
+                return Ok();
+            }
+            
+            throw new Exception("Failed to Update User");
+        }
+
+    [HttpPost("AddUser")]
+    public IActionResult AddUser(UserDto user) // to avoid sensitive data 
+        {
+            
+            string sql =@"INSERT INTO Users (FirstName, LastName, Email, Gender, Active) 
+            VALUES ("+
+            "'"    + user.FirstName+
+            "', '" + user.LastName+
+            "', '" + user.Email+
+            "', '" + user.Gender+
+            "', '" + user.Active+
+            "')";
+
+            Console.WriteLine(sql);
+            if(_dapper.ExecuteSql(sql))
+            {
+                return Ok();
+            }
+            
+            throw new Exception("Failed to Add User");
         }
 
  }
