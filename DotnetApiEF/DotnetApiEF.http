@@ -1,0 +1,6 @@
+@DotnetApiEF_HostAddress = http://localhost:5290
+
+GET {{DotnetApiEF_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
