@@ -1,6 +1,8 @@
 use DotNetCourseDatabase;
 GO
 Select * from Users;
+select * from UserSalary;
+Select * from UserJobInfo;
 SELECT DB_NAME();
 GO
 CREATE TABLE Users(
@@ -16,6 +18,7 @@ CREATE TABLE UserSalary(
     Salary DECIMAL(18, 4),
     FOREIGN KEY (USER_ID) REFERENCES Users(UserId)
 );
+EXEC sp_rename 'dbo.UserSalary.USER_ID', 'UserId', 'COLUMN';
 CREATE TABLE UserJobInfo
 (
     USER_ID INT
@@ -23,6 +26,7 @@ CREATE TABLE UserJobInfo
     , Department NVARCHAR(50),
     FOREIGN KEY (USER_ID) REFERENCES Users(UserId)
 );
+EXEC sp_rename 'dbo.UserJobInfo.USER_ID', 'UserId', 'COLUMN';
 
 --INSERT INTO Users 
 INSERT INTO Users (FirstName, LastName, Email, Gender, Active) VALUES
@@ -92,3 +96,22 @@ INSERT INTO UserJobInfo (USER_ID, JobTitle, Department) VALUES
 (18,'Digital Marketer','Marketing'),
 (19,'Support Engineer','IT'),
 (20,'Product Manager','Operations');
+
+
+
+-- creating auth table for authentication
+use master;
+go
+use DotNetCourseDatabase;
+GO
+
+create table Auth( 
+    Email Nvarchar(50), 
+    PasswordSalt VarBinary(MAX),
+    PasswordHash VarBinary(MAX),
+    
+)
+select * from Auth;
+delete from Auth where Email='vinaysen2@gmail.com';
+select * from Auth where Email='';
+GO

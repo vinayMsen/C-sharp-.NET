@@ -3,7 +3,7 @@ using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using DotnetApi.Data;
-using DotnetApi.Models.Users;
+using DotnetApi.Models.User;
 using DotnetApi.Dto;
 using Microsoft.AspNetCore.Mvc;
 //alt+shift+f to format the code
@@ -11,7 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 
 
 
-namespace DotnetApi.Controllers{
+namespace DotnetApi.Controllers
+{
 
 [ApiController] // send and recieve json data
 [Route("[controller]")] // route to the controller
@@ -112,6 +113,23 @@ public class UserController : ControllerBase
             }
             
             throw new Exception("Failed to Add User");
+        }
+
+
+    [HttpDelete("DeleteSingleUser/{UserId}")]
+    public IActionResult DeleteSingleUser(int UserId)
+        {
+            string sql = @"Delete from Users
+             where UserId= "+ UserId.ToString();
+
+             Console.WriteLine(sql);
+            if(_dapper.ExecuteSql(sql))
+            {
+                return Ok();
+            }
+            
+            throw new Exception("Failed to Delete User");
+
         }
 
  }

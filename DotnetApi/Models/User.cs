@@ -1,6 +1,6 @@
 
 
-namespace DotnetApi.Models.Users;
+namespace DotnetApi.Models.User;
 
 public partial class User
 {

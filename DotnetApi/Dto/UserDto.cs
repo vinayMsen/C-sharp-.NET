@@ -6,8 +6,9 @@ public partial class UserDto
 {
    /*In .NET Core, a DTO (Data Transfer Object) is a simple class used to 
    carry data between layers of an application without exposing the internal
-    domain or database models. DTOs typically contain only properties—no 
-    business logic—and are designed to improve security, performance, and maintainability.
+    domain or database models. DTOs typically contain only properties—
+    no business logic—
+    and are designed to improve security, performance, and maintainability.
     example userid,passwordlength
 
 Key advantages include:

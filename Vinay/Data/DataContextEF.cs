@@ -1,5 +1,4 @@
 using System.Data;
-using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +8,9 @@ namespace Vinay.Data
 {
     public class DataContextEF : DbContext
     {
-        public DbSet<Computer>? Computer  {get; set; } // Computer is the class that represents the computer table in the database, and the DbSet is a collection of computer objects that we can query and manipulate using ef, this will also allow us to use LINQ queries to query the database and to perform CRUD operations on the computer table
+        public DbSet<Computer>? Computer  {get; set; } // Computer is the class that represents the 
+        // computer table in the database, and the DbSet is a collection of computer objects that we 
+        // can query and manipulate using ef, this will also allow us to use LINQ queries to query the database and to perform CRUD operations on the computer table
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             IConfiguration config = new ConfigurationBuilder()

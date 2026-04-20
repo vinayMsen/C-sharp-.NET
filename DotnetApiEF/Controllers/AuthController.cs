@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using DotnetApiEF.Dto;
 using System.Security.Cryptography;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 using Dapper;
 
@@ -33,7 +36,7 @@ namespace DotnetApiEF.Controllers
                 {
                     string sqlCheckUserExist = "SELECT Email FROM Auth WHERE Email = '" + userForRegistration.Email + "'";
 
-                    // Fixed variable name consistency (existingUsers)
+                   
                     IEnumerable<string> existingUsers = _dapper.LoadData<string>(sqlCheckUserExist);
                     
                     if (existingUsers.Count() == 0)
@@ -44,13 +47,13 @@ namespace DotnetApiEF.Controllers
                             rng.GetNonZeroBytes(passwordSalt);
                         }
 
-                        // Fixed: passwordSalt variable name passed correctly
+                       
                         byte[] passwordHash = GetPasswordHash(userForRegistration.Password, passwordSalt);
 
                         string sqlAddAuth = @"INSERT INTO Auth (Email, PasswordHash, PasswordSalt)
                                             VALUES ('" + userForRegistration.Email + "', @PasswordHash, @PasswordSalt)";
 
-                        // Fixed: Correct spelling (SqlParameter) and list name consistency
+                     
                         List<SqlParameter> sqlParameters = new List<SqlParameter>();
 
                         SqlParameter passwordSaltParameter = new SqlParameter("@PasswordSalt", SqlDbType.VarBinary);
@@ -62,7 +65,7 @@ namespace DotnetApiEF.Controllers
                         sqlParameters.Add(passwordSaltParameter);
                         sqlParameters.Add(passwordHashParameter);
 
-                        // Ensure your DataContextDapper has this method name exactly
+                        
                         if (_dapper.ExecuteSqlParameter(sqlAddAuth, sqlParameters))
                          { 
                              string sqlAddUser =@"INSERT INTO Users (FirstName, LastName, Email, Gender, Active) 
@@ -104,8 +107,17 @@ namespace DotnetApiEF.Controllers
                 if(passwordHash[index] != userForConfirmation.PasswordHash[index])
                 return StatusCode(401,"Password  incorrect"); 
             }
-            return Ok();
+
+            string userIdSql= @"Select UserId from Users Where Email='"
+            +userForLogin.Email + "'";
+            int userId= _dapper.LoadDataSingle<int>(userIdSql);
+            return Ok(new Dictionary<string, string>
+            {
+                {"token", CreateToken(userId)}
+            });
+
         }
+
         private byte[] GetPasswordHash (string password, byte[] passwordSalt)
         {
             string passwordsaltplusString= _config.GetSection("AppSettings:Passwordkey").Value+
@@ -120,6 +132,48 @@ namespace DotnetApiEF.Controllers
                          );
 
         }
+
+
+        // new helper method which will return a string for JWT 
+       private string CreateToken(int userId)
+            {
+                // 1. Define the Claims (The user data inside the token)
+                Claim[] claims = new Claim[]
+                {
+                    new Claim("userId", userId.ToString())
+                };
+
+                // 2. Create the Security Key (The "Secret" used to sign the token)
+                
+                string? tokenKeyString = _config.GetSection("AppSettings:TokenKey").Value;
+ 
+                SymmetricSecurityKey tokenKey = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(
+                        tokenKeyString != null ? tokenKeyString : ""
+                    )
+                );
+
+                // 3. Define the Signing Credentials (The algorithm used for the signature)
+               
+                SigningCredentials credentials = new SigningCredentials(
+                    tokenKey,
+                    SecurityAlgorithms.HmacSha512Signature);
+
+                // 4. Describe the Token (What's in it, who signed it, when it expires)
+               
+                SecurityTokenDescriptor descriptor = new SecurityTokenDescriptor()
+                {
+                    Subject = new ClaimsIdentity(claims),
+                    SigningCredentials = credentials,
+                    Expires = DateTime.Now.AddDays(1)
+                };
+
+                // 5. Create and Write the Token
+                JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+                SecurityToken token = tokenHandler.CreateToken(descriptor);
+
+                return tokenHandler.WriteToken(token);
+            }
 
     }
 }

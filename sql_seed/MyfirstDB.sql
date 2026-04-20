@@ -206,5 +206,3 @@ SELECT getdate() as today_date ;
 -- They use logrithimic time complexity O(log n) for search instead of Linear time .
 -- 
 Create  INDEX idx_employee_emp_id ON employee(emp_id);
-
-SELECT * FROM employee;
