@@ -4,10 +4,11 @@ using DotnetApiEF.Dto;
 using System.Security.Cryptography;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System.Security.Claims;
 using System.Text;
 using Dapper;
-
 using DotnetApiEF.Data;
 using Microsoft.Data.SqlClient; // For SqlParameter and SqlConnection
 using System.Data;             // For SqlDbType
@@ -16,7 +17,11 @@ using Microsoft.AspNetCore.Cryptography.KeyDerivation; // For PBKDF2 hashing
 
 namespace DotnetApiEF.Controllers
 {
-    
+
+    [Authorize] // This attribute indicates that all endpoints in this controller require authentication
+    [ApiController] // send and recieve json data
+    [Route("[controller]")] // route to the controller
+
     public class AuthController: ControllerBase // is the base class for API controllers.
     {
         private readonly DataContextDapper _dapper; 
@@ -29,6 +34,7 @@ namespace DotnetApiEF.Controllers
              your private variable so other methods (like your Login or Register functions) can use it later*/
         }
 
+        [AllowAnonymous] // This attribute allows unauthenticated access to this specific endpoint, overriding the [Authorize] attribute at the controller level.
         [HttpPost("Register")]
             public IActionResult Register(UserForRegistrationDto userForRegistration)
             {
@@ -89,7 +95,8 @@ namespace DotnetApiEF.Controllers
                 }
                 throw new Exception("Passwords Do Not Match");
             }
-
+        
+       [AllowAnonymous] 
        [HttpPost("Login")]
         public IActionResult Login(UserForLoginDto userForLogin)
         {
@@ -116,6 +123,25 @@ namespace DotnetApiEF.Controllers
                 {"token", CreateToken(userId)}
             });
 
+        }
+
+
+        /* In .NET Core (and generally in authentication systems), 
+          a refresh token is a long-lived credential used to obtain a new access token without
+         requiring the user to log in again.*/
+        [HttpGet("RefreshToken")]
+        public IActionResult RefreshToken()
+        {
+           int userId = int.Parse(User.FindFirst("userId")?.Value ?? "0"); // get userId from the claims in the token
+
+            string userIdSql= "Select UserId from Users Where UserId="+userId;
+            int userIdFromDb = _dapper.LoadDataSingle<int>(userIdSql);
+
+            return Ok(new Dictionary<string, string>
+            {
+                {"token", CreateToken(userId)}
+            });
+            
         }
 
         private byte[] GetPasswordHash (string password, byte[] passwordSalt)

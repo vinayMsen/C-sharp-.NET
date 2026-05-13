@@ -1,5 +1,8 @@
 using System;
+using System.Text;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using System.Linq;
 using AutoMapper;
 using System.Configuration.Assemblies;
@@ -28,7 +31,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
                 });
             options.AddPolicy("ProdCors", (corsBuilder) =>
                 {
-                    corsBuilder.WithOrigins("https://myProductionSite.com")
+                   using These symmetricsecurity key to create tokenvalidatoin parameters corsBuilder.WithOrigins("https://myProductionSite.com")
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials();
@@ -36,6 +39,34 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         });
 
     builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+            // JWT validation 
+            string? tokenKeyString = builder.Configuration.GetSection("AppSettings:TokenKey").Value;
+        
+                        SymmetricSecurityKey tokenKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(
+                                tokenKeyString != null ? tokenKeyString : ""
+                            )
+                        );
+            
+            //using These symmetricsecurity key to create tokenvalidatoin parameters
+
+            TokenValidationParameters tokenValidationParameters = new TokenValidationParameters
+            {
+               IssuerSigningKey = tokenKey, // the key used to sign the token
+               ValidateIssuer = false,      // we are not validating the issuer of the token
+               ValidateIssuerSigningKey = true, // we are validating the signing key of the token
+               ValidateAudience = false // we are not validating the audience of the token
+            };
+
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = tokenValidationParameters;
+                });
+
+
      
     var app = builder.Build();
      
@@ -53,7 +84,13 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
     }
 
 
+app.UseAuthentication(); // add authentication middleware to the pipeline to check for the presence of 
+// a valid JWT token in the request headers
+
+app.UseAuthorization(); // add authorization middleware to the pipeline
+
 app.MapControllers(); 
+
 app.Run();
 
 
