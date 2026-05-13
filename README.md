@@ -34,8 +34,8 @@ git push
     
 
 **13/05/2026**
-   # implemented JWT Validation using These symmetricsecurity key to create tokenvalidatoin parameters
-   # Implemented RefreshToken: 
+   *** implemented JWT Validation using These symmetricsecurity key to create tokenvalidatoin parameters***
+   *** Implemented RefreshToken: ***
             User logs in → Server issues:
         Access Token (short expiry)
         Refresh Token (long expiry, e.g., days or weeks)
