@@ -112,6 +112,7 @@ create table Auth(
     
 )
 select * from Auth;
-delete from Auth where Email='vinaysen2@gmail.com';
+select * from Users;
+delete from Auth where Email='pinku@test.com';
 select * from Auth where Email='';
 GO

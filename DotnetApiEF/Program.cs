@@ -29,13 +29,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
                         .AllowAnyHeader()
                         .AllowCredentials();
                 });
-            options.AddPolicy("ProdCors", (corsBuilder) =>
-                {
-                   using These symmetricsecurity key to create tokenvalidatoin parameters corsBuilder.WithOrigins("https://myProductionSite.com")
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials();
-                });
+
         });
 
     builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -48,8 +42,9 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
                                 tokenKeyString != null ? tokenKeyString : ""
                             )
                         );
+                        
             
-            //using These symmetricsecurity key to create tokenvalidatoin parameters
+     // using These symmetricsecurity key to create tokenvalidatoin parameters corsBuilder.WithOrigins
 
             TokenValidationParameters tokenValidationParameters = new TokenValidationParameters
             {
